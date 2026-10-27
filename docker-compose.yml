@@ -1,0 +1,73 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes: [redisdata:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  api:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      PRIVATE_STORAGE_DIR: /private-evidence
+    command: sh -c 'python -m alembic upgrade head && python -m fleet.cli bootstrap && exec uvicorn app.main:app --host 0.0.0.0 --port 8000'
+    volumes: [evidence:/private-evidence]
+    ports: [127.0.0.1:8000:8000]
+    depends_on:
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+  worker:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      PRIVATE_STORAGE_DIR: /private-evidence
+    command: celery -A fleet.tasks:celery worker --loglevel=INFO --concurrency=2
+    volumes: [evidence:/private-evidence]
+    depends_on:
+      api: {condition: service_healthy}
+  beat:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      PRIVATE_STORAGE_DIR: /private-evidence
+    command: celery -A fleet.tasks:celery beat --loglevel=INFO
+    volumes: [evidence:/private-evidence]
+    depends_on:
+      api: {condition: service_healthy}
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args: {API_INTERNAL_URL: 'http://api:8000'}
+    ports: [127.0.0.1:3000:3000]
+    depends_on:
+      api: {condition: service_healthy}
+  mysql:
+    profiles: [mysql]
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: college_fleet
+      MYSQL_USER: fleet
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-local-development-change-me}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-local-root-development-change-me}
+    ports: [127.0.0.1:3306:3306]
+    volumes: [mysqldata:/var/lib/mysql]
+    healthcheck:
+      test: [CMD-SHELL, 'mysqladmin ping -h localhost --silent']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+volumes:
+  redisdata:
+  mysqldata:
+  evidence:

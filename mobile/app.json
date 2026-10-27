@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "AVS Fleet Command",
+    "slug": "college-fleet-command",
+    "version": "2.0.0",
+    "orientation": "default",
+    "scheme": "collegefleet",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "in.collegefleet.command"
+    },
+    "android": {
+      "package": "in.collegefleet.command",
+      "permissions": [],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#102C42"
+      }
+    },
+    "web": {
+      "name": "AVS Engineering College Fleet Command",
+      "bundler": "metro",
+      "favicon": "./assets/icon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-document-picker",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/logo.png",
+          "imageWidth": 180,
+          "resizeMode": "contain",
+          "backgroundColor": "#102C42"
+        }
+      ]
+    ],
+    "extra": {
+      "note": "Set EXPO_PUBLIC_API_URL to the reachable HTTPS API host. Credentials and telemetry provider secrets never belong here."
+    },
+    "icon": "./assets/icon.png"
+  }
+}

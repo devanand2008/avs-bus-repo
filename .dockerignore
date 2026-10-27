@@ -1,0 +1,15 @@
+**/node_modules
+**/.next
+**/.cfc-next
+**/.cfc-qa
+**/.expo
+**/dist
+**/legacy-ui
+**/.env
+**/.env.*
+.runtime
+output
+backend/private-evidence
+**/*.db
+**/__pycache__
+.git

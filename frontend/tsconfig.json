@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "target": "ES2017"
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".cfc-next/types/**/*.ts",
+    ".cfc-next/dev/types/**/*.ts",
+    ".cfc-qa/types/**/*.ts",
+    ".cfc-qa/dev/types/**/*.ts",
+    ".cfc-vercel-check/types/**/*.ts",
+    ".cfc-vercel-check/dev/types/**/*.ts",
+    ".cfc-next-tank/types/**/*.ts",
+    ".cfc-next-tank/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "legacy-ui",
+    "frontend",
+    ".next"
+  ]
+}

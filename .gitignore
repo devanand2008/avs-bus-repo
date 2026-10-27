@@ -1,0 +1,75 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+.env
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+.cfc-next/
+.cfc-qa/
+.cfc-vercel-check/
+.cfc-next-tank/
+.vercel/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database
+*.db
+*.sqlite3
+
+# Uploads
+uploads/
+
+# Environment
+.env.local
+.env.production
+.env.*
+!.env.example
+!**/.env.example
+backend/.env
+.runtime/
+private-evidence/
+backend/private-evidence/
+output/
+tmp/
+mobile/.expo/
+mobile/dist/
+*.tsbuildinfo
+test-results/
+
+# Retired application code; current entry point is backend/app/main.py.
+frontend/legacy-ui/
+frontend/frontend/
+backend/app/api/
+backend/app/models/
+backend/app/schemas/
+backend/app/services/
+backend/app/utils/
+backend/app/engines/
+backend/app/config.py
+backend/app/database.py
+backend/tests/
+backend/seed.py
+backend/seed_data.py
+backend/clear_database.py
+clear_database.bat
+seed_database.bat
+start_campus_fuelguard.bat
+stop_campus_fuelguard.bat
